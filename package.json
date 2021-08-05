@@ -1,0 +1,35 @@
+{
+  "name": "laravel-mix-esbuild",
+  "version": "1.0.0",
+  "description": "Laravel Mix extension to replace babel loader with esbuild-loader.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shaffe-fr/laravel-mix-esbuild.git"
+  },
+  "keywords": [
+    "laravel mix",
+    "webpack",
+    "esbuild",
+    "esbuild-loader"
+  ],
+  "author": "Karel Faille",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shaffe-fr/laravel-mix-esbuild/issues"
+  },
+  "homepage": "https://github.com/shaffe-fr/laravel-mix-esbuild",
+  "scripts": {
+    "format": "prettier --write \"**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "esbuild-loader": "^2.14.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  },
+  "peerDependencies": {
+    "laravel-mix": "^6.0"
+  }
+}
