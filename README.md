@@ -6,6 +6,7 @@ This extension provides support for [esbuild-loader](https://github.com/privaten
 
 * [Installation](https://github.com/shaffe-fr/laravel-mix-esbuild#installation)
 * [Usage](https://github.com/shaffe-fr/laravel-mix-esbuild#usage)
+* [Presets](https://github.com/shaffe-fr/laravel-mix-esbuild#presets)
 * [Options](https://github.com/shaffe-fr/laravel-mix-esbuild#options)
 * [Changelog](https://github.com/shaffe-fr/laravel-mix-esbuild#changelog)
 
@@ -38,8 +39,94 @@ mix
     .esbuild();
 ```
 
+## Presets
+
+#### Use with React
+
+If you're using react, use the following preset:
+
+```js
+mix.js('resources/js/app.js', 'public/js')
+    .esbuild('react');
+```
+
+⚠️ The `react` and `react-tsx` presets might require you to add `acorn` to your dependencies: 
+
+```sh
+npm install acorn --save-dev
+```
+
+Or if you prefer yarn:
+
+```sh
+yarn add acorn --dev
+```
+
+#### Use with TypeScript
+
+If you're using Typescript you can use the `ts` or `tsx` presets:
+
+```js
+mix.js('resources/js/app.js', 'public/js')
+    .esbuild('ts'); // or tsx
+```
+
+Your `tsconfig.json` should include the following entries:
+
+```jsonc
+{
+	"compilerOptions": {
+		// Highly recommended TS configurations to match behavior with esbuild
+		// https://esbuild.github.io/content-types/#typescript
+		"isolatedModules": true,
+		"esModuleInterop": true
+	}
+}
+```
+
+If you have a `tsconfig.json` file, esbuild-loader will automatically detect it.
+
+Alternatively, you can also pass it in directly via the `tsconfigRaw` option:
+
+```js
+mix.js('resources/js/app.js', 'public/js')
+    .esbuild('ts', {
+        tsconfigRaw: require('./tsconfig.json')
+    });
+```
+
+⚠️ esbuild only supports a subset of `tsconfig` options, see [esbuild-loader](https://github.com/privatenumber/esbuild-loader#typescript--tsx) for more information.
+
+#### Use with React and Typescript
+
+If you're using react with Typescript, use the following preset:
+
+```js
+mix.js('resources/js/app.js', 'public/js')
+    .esbuild('react-tsx');
+```
+
+⚠ You should configure your `tsconfig.json` file like mentionned [above](https://github.com/shaffe-fr/laravel-mix-esbuild#use-with-typescript).
+
+#### JSX without React
+
+If you're using JSX without React, use the `jsx` preset:
+
+```js
+mix.js('resources/js/app.js', 'public/js')
+    .esbuild('jsx');
+```
+
+Here is a JSX without React example: https://betterprogramming.pub/how-to-use-jsx-without-react-21d23346e5dc.
+
+#### Use with Vue
+
+It seems that the way esbuild-loader is built doesn't allow the support of Vue.
+Vue might work if `.vue` Single File Component are not used.
+
 ## Options
 
+You can pass custom options to the extension using the second argument.
 Full list of options available: [esbuild-loader](https://github.com/privatenumber/esbuild-loader).
 
 #### Change target
@@ -49,51 +136,10 @@ Default target is `es2015`.
 
 ```js
 mix.js('resources/js/app.js', 'public/js')
-    .esbuild({
+    .esbuild(null, {
         target: 'esnext'
     });
 ```
-
-#### Use with JSX
-
-If you're using JSX, use the following options:
-
-```js
-mix.js('resources/js/app.js', 'public/js')
-    .esbuild({
-        loader: 'jsx'
-    });
-```
-
-#### Use with TypeScript & JSX
-
-If you're using JSX, use the following options:
-
-```js
-mix.js('resources/js/app.js', 'public/js')
-    .esbuild({
-        loader: 'tsx',  // Or 'ts' if you don't need tsx
-    });
-```
-
-If you have a `tsconfig.json` file, esbuild-loader will automatically detect it.
-
-Alternatively, you can also pass it in directly via the `tsconfigRaw` option:
-
-
-```js
-mix.js('resources/js/app.js', 'public/js')
-    .esbuild({
-        loader: 'ts',
-        tsconfigRaw: require('./tsconfig.json')
-    });
-```
-
-⚠️ esbuild only supports a subset of `tsconfig` options, see [esbuild-loader](https://github.com/privatenumber/esbuild-loader#typescript--tsx) for more information.
-
-#### Use with Vue
-
-The way esbuild-loader is built doesn't allow the support of Vue.
 
 ## License
 
